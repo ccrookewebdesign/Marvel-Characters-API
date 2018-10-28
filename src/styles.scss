@@ -13,6 +13,7 @@ $colors: (
 
 $break1180: 1180px;
 $break980: 980px;
+$break900: 900px;
 $break770: 770px;
 $break660: 660px;
 $break600: 600px;
@@ -27,6 +28,12 @@ $break400: 400px;
 
 @mixin break980 {
   @media (max-width: #{$break980}) {
+    @content;
+  }
+}
+
+@mixin break900 {
+  @media (max-width: #{$break900}) {
     @content;
   }
 }
@@ -80,6 +87,27 @@ a {
 app-root {
   display: flex;
   flex-direction: column;
+}
+
+.spinner {
+  animation: rotate 2s linear infinite;
+  z-index: 2;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+  width: 80px;
+  height: 80px;
+  
+  & .path {
+    animation: dash 1.5s ease-in-out infinite;
+  }  
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .container {
@@ -274,5 +302,15 @@ footer {
 
   .credits {
     a { color: color(white);}
+  }
+
+  @include break900 {
+    height: auto;
+    > div {
+      flex-direction: column;
+      div {
+        margin: .35rem auto;
+      }
+    }
   }
 }

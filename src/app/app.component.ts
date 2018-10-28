@@ -5,6 +5,8 @@ import { environment } from '../environments/environment';
 import { MarvelService } from './marvel.service';
 import { Character} from './interfaces';
 
+//https://stackblitz.com/edit/angular-mat-autocomp-dependent?file=app%2Fautocomplete-simple-example.ts
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
@@ -19,6 +21,7 @@ export class AppComponent {
   limit: number = environment.pageSize;
   offset: number = 0;
   prefix: string = '';
+  showSpinner: boolean = false;
   
   minusOffset(offset: number) {
     if(this.offset > 0) {
@@ -41,10 +44,12 @@ export class AppComponent {
   }
 
   refreshCharacters(prefix = null, offset = 0) {
+    this.showSpinner = true;
     this.marvel.getCharacters(this.limit, prefix, offset).subscribe(data => {
       console.log('data', data);
       this.characters = data.data.results;
       this.totalCharacters = data.data.total;
+      this.showSpinner = false;
     });
   }
 
