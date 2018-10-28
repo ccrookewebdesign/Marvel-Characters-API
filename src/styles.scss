@@ -98,7 +98,7 @@ app-root {
   margin: -25px 0 0 -25px;
   width: 80px;
   height: 80px;
-  
+    
   & .path {
     animation: dash 1.5s ease-in-out infinite;
   }  
@@ -133,6 +133,11 @@ header {
     margin-left: 1rem;
     height: 34px;
     cursor: pointer;
+    transition: all .3s ease-in-out;
+    
+      &:hover {
+        transform: scale(1.1);        
+      }
 
     @include break770 {
       height: 30px;

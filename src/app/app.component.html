@@ -19,13 +19,16 @@
   <div class="container h-full flex items-center space-between">
     <div id="search" class="flex">
       <div>Search</div>
-      <input type="text" [value]="prefix" [(ngModel)]="prefix">
-      <button (click)="refreshCharacters(prefix)">Go</button>
+      <input type="text" 
+        [value]="prefix"
+        [(ngModel)]="prefix"
+        (keydown)="searchOnEnterBtn($event)">
+      <button (click)="searchFilter(prefix)">Go</button>
     </div>
 
     <div class="flex ml-auto letter-filter">
       <a *ngFor="let letter of alphabetArray"
-        (click)="refreshCharacters(prefix=letter)"
+        (click)="alphaFilter(letter)"
       >{{letter}}</a>
     </div>
   </div>
@@ -33,7 +36,7 @@
 <div class="content flex-auto py-6">
   <div class="container">
     <div class="flex items-center mb-4">
-      <span class="paging" (click)="refreshCharacters()">clear filter</span>
+      <span class="paging" (click)="clearFilter()">clear filter</span>
       <span class="paging ml-auto" (click)="minusOffset(18)"><< Previous</span>
       <span class="paging ml-6" (click)="plusOffset(18)">Next >></span>
     </div>

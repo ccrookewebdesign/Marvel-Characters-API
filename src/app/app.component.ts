@@ -22,21 +22,7 @@ export class AppComponent {
   offset: number = 0;
   prefix: string = '';
   showSpinner: boolean = false;
-  
-  minusOffset(offset: number) {
-    if(this.offset > 0) {
-      this.offset -= offset;
-      this.refreshCharacters(this.prefix, this.offset);
-    }
-  }
-
-  plusOffset(offset: number) {
-    if(this.offset <= this.totalCharacters && this.totalCharacters > this.limit) {
-      this.offset += offset;
-      this.refreshCharacters(this.prefix, this.offset);
-    }    
-  }
-
+    
   constructor(private marvel: MarvelService) {}
 
   ngOnInit() {
@@ -51,6 +37,43 @@ export class AppComponent {
       this.totalCharacters = data.data.total;
       this.showSpinner = false;
     });
+  }
+
+  minusOffset(offset: number) {
+    if(this.offset > 0) {
+      this.offset -= offset;
+      this.refreshCharacters(this.prefix, this.offset);
+    }
+  }
+
+  plusOffset(offset: number) {
+    if((this.offset + offset) <= this.totalCharacters && this.totalCharacters > this.limit) {
+      this.offset += offset;
+      this.refreshCharacters(this.prefix, this.offset);
+    }    
+  }
+
+  clearFilter() {
+    this.offset = 0;
+    this.refreshCharacters();
+  }
+
+  alphaFilter(letter) {
+    this.offset = 0;
+    this.prefix = letter;
+    this.refreshCharacters(this.prefix, this.offset);
+  }
+
+  searchOnEnterBtn(e) {
+    if(e.keyCode == 13) {
+      this.searchFilter(this.prefix);
+    }
+  }
+
+  searchFilter(searchTerm) {
+    this.offset = 0;
+    this.prefix = searchTerm;
+    this.refreshCharacters(this.prefix, this.offset);
   }
 
   /* getCharacter(characterId: number) {
