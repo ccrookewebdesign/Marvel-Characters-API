@@ -1,0 +1,278 @@
+//http://fontsgeek.com/fonts/BentonSans-Comp-Black-Regular
+
+$colors: (
+  marvel-red: #ED1D24,
+  white: #eeeeee,
+  dark-back: #171717,
+  black: #212121
+);
+
+@function color($color-name) {
+  @return map-get($colors, $color-name)
+}
+
+$break1180: 1180px;
+$break980: 980px;
+$break770: 770px;
+$break660: 660px;
+$break600: 600px;
+$break580: 580px;
+$break400: 400px;
+
+@mixin break1180 {
+  @media (max-width: #{$break1180}) {
+    @content;
+  }
+}
+
+@mixin break980 {
+  @media (max-width: #{$break980}) {
+    @content;
+  }
+}
+
+@mixin break770 {
+  @media (max-width: #{$break770}) {
+    @content;
+  }
+}
+
+@mixin break660 {
+  @media (max-width: #{$break660}) {
+    @content;
+  }
+}
+
+@mixin break600 {
+  @media (max-width: #{$break600}) {
+    @content;
+  }
+}
+
+@mixin break580 {
+  @media (max-width: #{$break580}) {
+    @content;
+  }
+}
+
+@mixin break400 {
+  @media (max-width: #{$break400}) {
+    @content;
+  }
+}
+
+* {
+  font-family: 'Roboto';
+  font-weight: 300;
+  text-decoration: none;
+  outline: none;
+}
+
+html, body, app-root {
+  height: 100%;
+  min-width: 400px;
+}
+
+a {
+  cursor: pointer;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 1140px;
+  min-width: 400px;
+  margin: 0 auto;
+
+  @include break980 {
+    padding: 0 .5rem;
+  }
+}
+
+header {
+  height: 65px;
+  background-color: color(marvel-red);
+  color: color(white);
+  
+  img {
+    height: 65px;
+  }
+
+  .hero-icons img {
+    margin-left: 1rem;
+    height: 34px;
+    cursor: pointer;
+
+    @include break770 {
+      height: 30px;
+    }
+
+    @include break770 {
+      height: 24px;
+    }
+
+    @include break600 {
+      display: none;
+    }
+  }
+}
+
+nav {
+  height: 40px;
+  background-color: #22262A;
+  text-transform: uppercase;
+  align-items: center;
+  color: color(white);
+
+  #search {
+    display: flex;
+    align-items: center;
+    
+    div {
+      padding-top: .15rem;
+    }
+
+    input[type=text] {
+      color: #b7b7b7;
+      height: 30px;
+      margin: 0 .75rem;
+      background: #2E3438;
+      border: 1px solid #1b1b1b; 
+      width: 250px;
+      padding: 0 .5rem;
+    }
+
+    button {
+      font-size: .85rem;
+      background: color(marvel-red);
+      color: color(white);
+      border-radius: 50%;
+      height: 26px;
+      width: 26px;
+    }
+  }
+
+  .letter-filter {
+    a {
+      margin-left: .5rem;
+    }
+
+    @include break980 {
+      display: none;
+    }
+  }
+  
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.content {
+  background: color(dark-back) url('/assets/img/background.svg') center 80px no-repeat;
+  background-size: 550px;
+
+  .paging {
+    color: color(white);
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: .9rem;
+  }
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: repeat(6,auto);
+    grid-gap: 12px;
+    
+    @include break1180 {
+      grid-template-columns: repeat(5,auto);
+    }
+    
+    @include break980 {
+      grid-template-columns: repeat(4,auto);
+    }
+
+    @include break770 {
+      grid-template-columns: repeat(3,auto);
+    }
+
+    @include break580 {
+      grid-template-columns: repeat(2,auto);
+    }
+
+    @include break400 {
+      grid-gap: 1px;
+    }
+  }
+  
+  .character {
+    color: #212121;
+    height: 350px;
+    width: 175px;
+    background: no-repeat #fff;
+    margin-bottom: 2rem;
+    
+    .character-image {
+      height: 175px;
+      width: 175px;
+      background-size: 175px 175px;
+      transition: all .3s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.4);
+        border: 1px solid color(black);
+
+        @include break600 {
+          transform: none;
+        }
+      }      
+    }
+
+    .character-details {
+      margin-top: auto;
+      color: color(black);
+      height: 175px;
+      padding: .25rem;
+      display: flex;
+      flex-direction: column;
+
+      .character-name {
+        height: 40px;
+      }
+
+      h4 {
+        font-size: .9rem;
+        font-weight: 400;
+        margin-bottom: .5rem;
+      }
+
+      p {
+        font-size: .9rem;
+      }
+
+      a {
+        color: color(marvel-red);
+      }
+    }
+  }
+
+}
+
+footer {
+  color: color(white);
+  background-color: color(dark-back);
+  font-size: .9rem;
+  height: 30px;
+
+  a {
+    color: color(marvel-red);
+  }
+
+  .credits {
+    a { color: color(white);}
+  }
+}
