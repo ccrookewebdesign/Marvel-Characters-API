@@ -1,6 +1,6 @@
 <header>
   <div class="container h-full flex items-center">
-    <img src="/assets/img/marvel-logo.svg">
+    <img (click)="clearFilter()" src="/assets/img/marvel-logo.svg">
     <div class="hero-icons ml-auto">
       <img (click)="refreshCharacters(prefix='Captain America')" src="/assets/img/captain-america.svg">
       <img (click)="refreshCharacters(prefix='Iron Man')" src="/assets/img/iron-man.svg">
@@ -18,12 +18,15 @@
 <nav>
   <div class="container h-full flex items-center space-between">
     <div id="search" class="flex">
-      <div>Search</div>
       <input type="text" 
-        [value]="prefix"
+        placeholder="Search"
         [(ngModel)]="prefix"
         (keydown)="searchOnEnterBtn($event)">
-      <button (click)="searchFilter(prefix)">Go</button>
+      <button (click)="alphaFilter(prefix)">Go</button>
+      <input type="checkbox"
+        [(ngModel)]="imgFilter"
+        (change)="photoFilter($event)">
+      <span (click)="imgFilter=!imgFilter;photoFilter($event)">photos only</span>
     </div>
 
     <div class="flex ml-auto letter-filter">
@@ -35,11 +38,19 @@
 </nav>
 <div class="content flex-auto py-6">
   <div class="container">
-    <div class="flex items-center mb-4">
+    <div class="paging-container flex items-center mb-4">
       <span class="paging" (click)="clearFilter()">clear filter</span>
-      <span class="paging ml-auto" (click)="minusOffset(18)"><< Previous</span>
-      <span class="paging ml-6" (click)="plusOffset(18)">Next >></span>
+      <span *ngIf="!characters.length" class="no-records ml-4">No characters found</span>
+      <span *ngIf="characters.length" 
+        class="paging ml-auto" 
+        (click)="minusOffset(limit)"><< Previous</span>
+      <span *ngIf="characters.length"
+        class="paging ml-6"
+        (click)="plusOffset(limit)">Next >></span>
     </div>
+    
+    
+    
 
     <div class="wrapper">
       <div 
@@ -58,11 +69,8 @@
           <div class="character-name">
             <h4>{{character.name}}</h4>
           </div>
-          <p *ngIf="character.description.length > 135">
-            {{character.description | slice:0:135}}...
-          </p>
-          <p *ngIf="character.description.length < 135">
-            {{character.description.length ? character.description : 'No description available.'}}
+          <p>
+            {{character.description | characterDescription}}
           </p>
           <div class="mt-auto text-right text-xs">
             <a [href]="character.urls[0].url">view details</a>
@@ -70,10 +78,12 @@
         </div>      
       </div>
     </div>      
-    <div class="text-right flex items-center mb-4">
-      <span class="paging" (click)="refreshCharacters()">clear filter</span>
-      <span class="paging ml-auto" (click)="minusOffset(18)"><< Previous</span>
-      <span class="paging ml-6" (click)="plusOffset(18)">Next >></span>
+    <div *ngIf="characters.length" class="paging-container flex items-center mb-4">
+      <span class="paging" (click)="clearFilter()">clear filter</span>
+      <span class="paging ml-auto" 
+        (click)="minusOffset(limit)"><< Previous</span>
+      <span class="paging ml-6"
+        (click)="plusOffset(limit)">Next >></span>
     </div>
   </div>  
 </div>
@@ -81,7 +91,7 @@
   <div class="pb-4 container h-full flex items-center pt-1 space-between">
     <div>&copy; {{thisYear}} <a href="http://iamchris.io" class="mx-2">iamchris.io</a> | <a href="http://ccrooke.com"  class="ml-2">ccrooke.com</a></div>
     <div class="mx-auto">
-      made with <a href="https://angular.io/">angular</a>, <a href="https://tailwindcss.com">tailwind css</a>, and <a href="https://marvel.com">marvel</a>
+      made with <a href="https://angular.io/">angular</a>, <a href="https://tailwindcss.com">tailwind css</a>, and <a href="https://marvel.com">marvel api</a>
     </div>
     <div class="text-right text-xs credits">Data provided by Marvel. Icons by <a href="http://www.freepik.com">Freepik</a>/<a href="http://www.flaticon.com">flaticon</a></div>
   </div>  
